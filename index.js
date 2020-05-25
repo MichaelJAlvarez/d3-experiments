@@ -58,14 +58,14 @@ const setupChart = (dataset) => {
     .domain(d3.extent(dataset, yAccessor))
     .range([dimensions.boundedHeight, 0]);
 
-  const freezingTemperaturePlacement = yScale(0);
-  const freezingTemperatures = bounds.append("rect")
-    .attr("x", 0)
-    .attr("width", dimensions.boundedWidth)
-    .attr("y", freezingTemperaturePlacement)
-    .attr("height", dimensions.boundedHeight
-      - freezingTemperaturePlacement)
-    .attr("fill", "#e0f3f3");
+  // const freezingTemperaturePlacement = yScale(0);
+  // const freezingTemperatures = bounds.append("rect")
+  //   .attr("x", 0)
+  //   .attr("width", dimensions.boundedWidth)
+  //   .attr("y", freezingTemperaturePlacement)
+  //   .attr("height", dimensions.boundedHeight
+  //     - freezingTemperaturePlacement)
+  //   .attr("fill", "#e0f3f3");
 
 
   const lineGenerator = d3.line()
@@ -76,8 +76,16 @@ const setupChart = (dataset) => {
     .attr("d", lineGenerator(dataset))
     .attr("fill", "none")
     .attr("stroke", "#af9358")
-    .attr("stroke-width", 2)
+    .attr("stroke-width", 2);
+
+  const yAxisGenerator = d3.axisLeft().scale(yScale);
+  const yAxis = bounds.append("g") .call(yAxisGenerator);
+  const xAxisGenerator = d3.axisBottom().scale(xScale);
+  const xAxis = bounds.append("g").call(xAxisGenerator).style("transform",
+    `translateY(${ dimensions.boundedHeight
+  }px)`);
 }
+
 
 
 
